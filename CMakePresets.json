@@ -1,0 +1,49 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "native",
+      "displayName": "Host build (dev sanity checks)",
+      "binaryDir": "${sourceDir}/build/native",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "riscv64",
+      "displayName": "RISC-V 64 cross, RVV on, generic rv64gcv",
+      "binaryDir": "${sourceDir}/build/riscv64",
+      "toolchainFile": "${sourceDir}/cmake/toolchain-riscv64-linux.cmake",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release", "_USE_RVV": "ON", "RVV_MARCH": "rv64gcv" }
+    },
+    {
+      "name": "riscv64-x100",
+      "displayName": "RISC-V 64 for SpacemiT X60/X100 (bitmanip + zicond)",
+      "binaryDir": "${sourceDir}/build/riscv64-x100",
+      "toolchainFile": "${sourceDir}/cmake/toolchain-riscv64-linux.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "_USE_RVV": "ON",
+        "RVV_MARCH": "rv64gcv_zba_zbb_zbc_zbs_zicond"
+      }
+    },
+    {
+      "name": "riscv64-baseline",
+      "displayName": "A/B 的 B 侧：同一工具链、不打内核宏",
+      "binaryDir": "${sourceDir}/build/riscv64-b",
+      "toolchainFile": "${sourceDir}/cmake/toolchain-riscv64-linux.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "_USE_RVV": "ON",
+        "RVV_MARCH": "rv64gcv",
+        "RVV_KERNELS": "OFF",
+        "SRC_DIR": "${sourceDir}/baseline"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "native", "configurePreset": "native" },
+    { "name": "riscv64", "configurePreset": "riscv64" },
+    { "name": "riscv64-x100", "configurePreset": "riscv64-x100" },
+    { "name": "riscv64-baseline", "configurePreset": "riscv64-baseline" }
+  ]
+}

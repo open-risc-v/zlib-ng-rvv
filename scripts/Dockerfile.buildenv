@@ -1,0 +1,16 @@
+# 交叉构建 + qemu-user 运行环境。scripts/device-test.sh 与 docker-cross.sh 共用，
+# 构建成本只付一次（镜像缓存）。
+#
+# gcc-14 交叉工具链（RVV intrinsics v1.0，__riscv_v_intrinsic=12000）：
+# 需要 segment tuple（vlseg4e16 等）与 vmerge/vrgather 的新签名时用它。
+# gcc-14 包不带无后缀的 riscv64-linux-gnu-gcc，而 cmake 工具链文件按该名查找，补软链。
+FROM ubuntu:24.04
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      build-essential cmake ninja-build \
+      gcc-14-riscv64-linux-gnu g++-14-riscv64-linux-gnu \
+      gcc-riscv64-linux-gnu libc6-dev-riscv64-cross \
+      qemu-user ca-certificates && \
+    ln -sf /usr/bin/riscv64-linux-gnu-gcc-14 /usr/bin/riscv64-linux-gnu-gcc && \
+    ln -sf /usr/bin/riscv64-linux-gnu-g++-14 /usr/bin/riscv64-linux-gnu-g++ && \
+    rm -rf /var/lib/apt/lists/*

@@ -1,0 +1,9 @@
+# 上游快照不入库：它由 fetch-upstream.sh 按 project.conf 的 URL/SHA 重建
+baseline/
+build/
+*.o
+*.a
+*.so
+*.out
+*.raw
+.DS_Store
