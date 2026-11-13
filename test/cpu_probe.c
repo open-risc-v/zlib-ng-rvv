@@ -7,6 +7,7 @@
  * 注意：rdtime 频率未知，所有时间同时给"tick"与"按 1.6GHz 假设换算的 ns"，
  * ns 只用于横向比较，不对外当绝对性能。真实性能一律看 paired_bench。
  */
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
