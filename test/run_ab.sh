@@ -72,11 +72,11 @@ for c in "${cases[@]}"; do
   rm -rf "${out_a}" "${out_b}"
   mkdir -p "${out_a}" "${out_b}"
 
-  STAGE=gen SIDE=A BIN="${BUILD_A}" DATA="${DATA}" OUT="${out_a}" run sh "${c}" >/dev/null 2>&1 || {
-    echo "SKIP ${name}（生成输入失败，可能是上游未就位）"; continue; }
-  STAGE=run SIDE=A BIN="${BUILD_A}" DATA="${DATA}" OUT="${out_a}" run sh "${c}" || {
+  STAGE=gen SIDE=A BIN="${BUILD_A}" DATA="${DATA}" OUT="${out_a}" run bash "${c}" >/dev/null 2>&1 || {
+    echo "FAIL ${name}（生成输入失败，可能是上游未就位）"; fail=1; continue; }
+  STAGE=run SIDE=A BIN="${BUILD_A}" DATA="${DATA}" OUT="${out_a}" run bash "${c}" || {
     echo "FAIL ${name}（A 侧运行失败）"; fail=1; continue; }
-  STAGE=run SIDE=B BIN="${BUILD_B}" DATA="${DATA}" OUT="${out_b}" run sh "${c}" || {
+  STAGE=run SIDE=B BIN="${BUILD_B}" DATA="${DATA}" OUT="${out_b}" run bash "${c}" || {
     echo "FAIL ${name}（B 侧运行失败）"; fail=1; continue; }
 
   produced=$(find "${out_a}" -type f | wc -l | tr -d ' ')
