@@ -10,8 +10,14 @@
 
 #include "functable.h"
 #include "adler32_p.h"
+#if defined(RVV_KERNELS) && defined(__riscv_v)
+#include "../riscv/adler32_rvv.h"
+#endif
 
 Z_INTERNAL uint32_t adler32_c(uint32_t adler, const uint8_t *buf, size_t len) {
+#if defined(RVV_KERNELS) && defined(__riscv_v)
+    if (buf && len >= 64) return zng_adler32_rvv(adler, buf, len);
+#endif
     uint32_t sum2;
     size_t n;
 
