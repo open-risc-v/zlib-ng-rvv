@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 真机（SpacemiT X60/X100，Bianbu Linux）上的 A/B 与基准。
+# 真机（SpacemiT X60/X100，<distro> Linux）上的 A/B 与基准。
 #
 #   ./scripts/device-test.sh build     # 容器内静态交叉构建 A/B 两棵
 #   ./scripts/device-test.sh deploy    # adb push 到板子

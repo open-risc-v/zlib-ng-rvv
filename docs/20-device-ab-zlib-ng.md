@@ -1,7 +1,7 @@
 # 真机 rvv/cpu A/B 测试：zlib-ng（首轮）
 
-- 真机：`10.91.8.28`，K3（rv64imafdcvh + RVV 1.0，`zve64d/zvbb/zvkb/zvkned…`），8 核，15GB
-- 工具链：Bianbu gcc 15.2.0（**带 `riscv_vector.h`**，这是交叉 gcc 11/12 缺的东西）
+- 真机：`<board>`，K3（rv64imafdcvh + RVV 1.0，`zve64d/zvbb/zvkb/zvkned…`），8 核，15GB
+- 工具链：<distro> gcc 15.2.0（**带 `riscv_vector.h`**，这是交叉 gcc 11/12 缺的东西）
 - 上游：`github.com/zlib-ng/zlib-ng` @ `6727d88`
 - 双侧同源、同 `-O2`，唯一变量是 ISA：`-march=rv64gc`（cpu）vs `-march=rv64gcv -DWITH_RVV=ON`（rvv）
 
